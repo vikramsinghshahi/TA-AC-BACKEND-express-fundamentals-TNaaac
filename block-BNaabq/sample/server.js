@@ -11,9 +11,17 @@ app.use(logger("dev"))
 app.use(cookieParser())
 
 
-app.use((req, res, next)=>{
-  res.cookie("count" , 1);
+app.use("/about", (req, res, next)=>{
+  res.cookie("username", "xyz");
+  res.end("about page")
+
   next();
+})
+
+app.use((req , res, next)=>{
+    console.log(req.cookies)
+
+    next();
 })
 
 app.get('/', (req, res)=>{
