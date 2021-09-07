@@ -2,15 +2,10 @@ var express = require('express');
 
 var app = express();
 
-app.use('/', (req, res, next) => {
-  res.send('error 404');
-  next(err);
+app.use('/admin', (req, res, next) => {
+  next('unauthorsied attempt');
 });
 
-app.use('/about', (req, res) => {
-  res.send('error 404');
-  next(err);
-});
 app.get('/', (req, res) => {
   res.send('welcome');
 });
@@ -19,9 +14,12 @@ app.get('/about', (req, res) => {
   res.send('about page');
 });
 
+app.use((req, res, next) => {
+  res.send('page not found');
+});
+
 app.use((err, req, res, next) => {
-  res.send(err);
-  next();
+  res.status(500).send(err);
 });
 
 app.listen(3000, () => {
